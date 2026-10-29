@@ -142,6 +142,11 @@
                 </dependencies>
             </plugin>
             <plugin>
+                <!-- SBOM med alle Maven-avhengigheter, lastes opp med imaget via byosbom i workflowene. Versjon og oppsett fra spring-boot-starter-parent -->
+                <groupId>org.cyclonedx</groupId>
+                <artifactId>cyclonedx-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar-maven-plugin.version}</version>
