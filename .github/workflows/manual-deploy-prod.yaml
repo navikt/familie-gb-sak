@@ -1,0 +1,47 @@
+name: Manual deploy to prod
+on:
+  workflow_dispatch:
+    inputs:
+      skip-tests:
+        description: 'Skip tests?'
+        required: false
+        default: false
+        type: boolean
+
+permissions: {}
+
+jobs:
+  test:
+    name: Test
+    if: ${{ !inputs.skip-tests }}
+    permissions:
+      contents: read
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/pull-request-maven.yaml@main # ratchet:exclude
+    with:
+      java-version: '25'
+  build:
+    name: Build
+    permissions:
+      contents: read
+      id-token: write
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/build-maven-app.yaml@main # ratchet:exclude
+    with:
+      build-image: true
+      push-image: true
+      skip-tests: true
+      java-version: '25'
+  deploy:
+    name: Deploy prod
+    permissions:
+      contents: read
+      id-token: write
+    needs: [build, test]
+    if: |
+      always() &&
+      needs.build.result == 'success' &&
+      (inputs.skip-tests || needs.test.result == 'success')
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/deploy.yaml@main # ratchet:exclude
+    with:
+      image: ${{ needs.build.outputs.image }}
+      cluster: prod-gcp
+      resource: .nais/app-prod.yaml
