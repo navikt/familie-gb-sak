@@ -18,11 +18,17 @@ spec:
   readiness:
     path: /internal/health/readiness
     failureThreshold: 10
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
   observability:
     logging:
       destinations:
         - id: elastic
         - id: loki
+    autoInstrumentation:
+      enabled: true
+      runtime: java
   accessPolicy:
     outbound:
       rules:

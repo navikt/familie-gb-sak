@@ -12,7 +12,7 @@ server:
 
 management:
   endpoints.web:
-    exposure.include: info, health
+    exposure.include: info, health, prometheus
     base-path: "/internal"
   endpoint:
     health:
