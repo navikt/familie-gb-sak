@@ -27,6 +27,7 @@
         <prosessering.version>2.20261027150838_57ccae7</prosessering.version>
         <felles-kontrakter.version>4.0_20261026123216_8087cb5</felles-kontrakter.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
+        <unleash.version>12.3.1</unleash.version>
         <ktlint.version>1.8.0</ktlint.version>
         <sonar.organization>navikt</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -65,6 +66,10 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.micrometer</groupId>
             <artifactId>micrometer-registry-prometheus</artifactId>
         </dependency>
@@ -85,7 +90,26 @@
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-reflect</artifactId>
         </dependency>
+        <dependency>
+            <groupId>io.getunleash</groupId>
+            <artifactId>unleash-client-java</artifactId>
+            <version>${unleash.version}</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.squareup.okhttp3</groupId>
+                    <artifactId>okhttp</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
 
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>sikkerhet</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>sikkerhet-spring-security</artifactId>
+        </dependency>
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>log</artifactId>
@@ -93,6 +117,22 @@
         <dependency>
             <groupId>no.nav.familie.felles</groupId>
             <artifactId>leader</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>unleash</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>token-klient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>tilgangsmaskin-klient</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>metrikker</artifactId>
         </dependency>
         <dependency>
             <groupId>no.nav.familie</groupId>
