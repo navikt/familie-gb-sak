@@ -52,3 +52,11 @@ jobs:
 #      image: ${{ needs.build.outputs.image }}
 #      cluster: prod-gcp
 #      resource: .nais/app-prod.yaml
+#  varsle-slack:
+#    name: Slack-melding ved feil
+#    if: failure()
+#    permissions: {}
+#    needs: [ build, deploy-dev, deploy-prod ]
+#    uses: navikt/familie-baks-gha-workflows/.github/workflows/notify-failed-workflow.yaml@main # ratchet:exclude
+#    secrets:
+#      BAKS_DEPLOYMENTS_SLACK_WEBHOOK: ${{ secrets.BAKS_DEPLOYMENTS_SLACK_WEBHOOK }}
