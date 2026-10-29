@@ -23,6 +23,7 @@
         <revision>1</revision>
         <sha1/>
         <changelist>-SNAPSHOT</changelist>
+        <felles.version>4.20261026180911_c3ff6d9</felles.version>
         <prosessering.version>2.20261027150838_57ccae7</prosessering.version>
         <felles-kontrakter.version>4.0_20261026123216_8087cb5</felles-kontrakter.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
@@ -41,6 +42,18 @@
             <url>https://maven.pkg.github.com/navikt/familie-felles</url>
         </repository>
     </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>no.nav.familie.felles</groupId>
+                <artifactId>felles</artifactId>
+                <version>${felles.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -69,6 +82,10 @@
             <artifactId>kotlin-reflect</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>no.nav.familie.felles</groupId>
+            <artifactId>leader</artifactId>
+        </dependency>
         <dependency>
             <groupId>no.nav.familie</groupId>
             <artifactId>prosessering-core</artifactId>

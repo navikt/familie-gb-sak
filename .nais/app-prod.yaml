@@ -8,6 +8,7 @@ metadata:
 spec:
   image: {{image}}
   port: 8091
+  leaderElection: true
   startup:
     path: /internal/health/liveness
     periodSeconds: 10
