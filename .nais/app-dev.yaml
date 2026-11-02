@@ -76,6 +76,8 @@ spec:
     requests:
       memory: 1024Mi
       cpu: 50m
+  ingresses:
+    - https://gravferd-sak.intern.dev.nav.no
   env:
     - name: TILGANGSMASKIN_API_URL
       value: http://populasjonstilgangskontroll.tilgangsmaskin
