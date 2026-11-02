@@ -31,6 +31,7 @@ jobs:
       byosbom: target/classes/META-INF/sbom/application.cdx.json
       skip-tests: true
       java-version: '25'
+      team: gravferd
   deploy:
     name: Deploy dev
     permissions:

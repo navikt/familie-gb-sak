@@ -31,6 +31,7 @@ jobs:
       push-image: true
       byosbom: target/classes/META-INF/sbom/application.cdx.json
       java-version: '25'
+      team: gravferd
   deploy-dev:
     name: Deploy dev
     permissions:
