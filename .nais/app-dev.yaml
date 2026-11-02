@@ -50,6 +50,10 @@ spec:
       claims:
         extra:
           - "NAVident"
+      replyURLs:
+        - "https://gravferd-sak.intern.dev.nav.no/swagger-ui/oauth2-redirect.html"
+        - "http://localhost:8091/swagger-ui/oauth2-redirect.html"
+      singlePageApplication: true
   accessPolicy:
     inbound:
       rules:
