@@ -30,7 +30,17 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: false
+      claims:
+        extra:
+          - "NAVident"
   accessPolicy:
+    inbound:
+      rules:
+        - application: familie-gb-sak-frontend
     outbound:
       rules:
         - application: logging
