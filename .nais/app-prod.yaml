@@ -1,11 +1,13 @@
 apiVersion: "nais.io/v1alpha1"
 kind: "Application"
 metadata:
-  name: familie-gb-sak
-  namespace: teamfamilie
+  name: gravferd-sak
+  namespace: gravferd
   labels:
-    team: teamfamilie
+    team: gravferd
 spec:
+  envFrom:
+    - secret: gravferd-sak-unleash-api-token
   image: {{image}}
   port: 8091
   leaderElection: true
@@ -40,11 +42,13 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: familie-gb-sak-frontend
+        - application: gravferd-sak-frontend
     outbound:
       rules:
         - application: logging
           namespace: nais-system
+      external:
+        - host: gravferd-unleash-api.nav.cloud.nais.io
   replicas:
     min: 1
     max: 2

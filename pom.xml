@@ -10,9 +10,9 @@
     </parent>
 
     <groupId>no.nav.familie.gb.sak</groupId>
-    <artifactId>familie-gb-sak</artifactId>
+    <artifactId>gravferd-sak</artifactId>
     <version>${revision}${sha1}${changelist}</version>
-    <name>familie-gb-sak</name>
+    <name>gravferd-sak</name>
     <description>Saksbehandling gravferdsstønad</description>
 
     <properties>

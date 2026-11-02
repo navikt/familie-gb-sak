@@ -3,7 +3,7 @@ logging:
 
 #spring:
 #  datasource:
-#    url: jdbc:postgresql://localhost:5432/familie-gb-sak
+#    url: jdbc:postgresql://localhost:5432/gravferd-sak
 #    username: postgres
 #    password: test
 #  flyway:
@@ -11,7 +11,7 @@ logging:
 
 prosessering.rolle: "928636f4-fd0d-4149-978e-a6fb68bb19de" # 0000-GA-STDAPPS
 
-NAIS_APP_NAME: familie-gb-sak
+NAIS_APP_NAME: gravferd-sak
 DEPLOY_ENV: dev
 
 AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token

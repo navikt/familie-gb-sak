@@ -1,6 +1,6 @@
 spring:
   application:
-    name: familie-gb-sak
+    name: gravferd-sak
   main:
     banner-mode: "off"
   lifecycle:

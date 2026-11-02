@@ -2,10 +2,10 @@
 # Henter miljøvariabler for DevLauncherPostgresPreprod med nais-cli.
 # NB: DevLauncherPostgresPreprod forkaster første linje på stdout – behold statuslinja før printf.
 
-TEAM=grav-og-baare
+TEAM=gravferd
 MILJO=dev-gcp
-APP=familie-gb-sak
-BEGRUNNELSE="Lokal kjoering av familie-gb-sak mot preprod"
+APP=gravferd-sak
+BEGRUNNELSE="Lokal kjoering av gravferd-sak mot preprod"
 
 if [[ "$(nais device status)" != *"Connected"* ]]; then
   echo "Naisdevice er ikke tilkoblet. Start naisdevice og velg connect. Status må være grønn."
