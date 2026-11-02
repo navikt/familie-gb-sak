@@ -47,6 +47,9 @@ spec:
       rules:
         - application: logging
           namespace: nais-system
+        - application: populasjonstilgangskontroll
+          namespace: tilgangsmaskin
+          cluster: dev-gcp
       external:
         - host: gravferd-unleash-api.nav.cloud.nais.io
   replicas:
@@ -59,6 +62,10 @@ spec:
       memory: 1024Mi
       cpu: 50m
   env:
+    - name: TILGANGSMASKIN_API_URL
+      value: http://populasjonstilgangskontroll.tilgangsmaskin
+    - name: TILGANGSMASKIN_SCOPE
+      value: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
     - name: SPRING_PROFILES_ACTIVE
       value: preprod
     - name: JDK_JAVA_OPTIONS
