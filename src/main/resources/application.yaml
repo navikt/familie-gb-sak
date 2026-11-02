@@ -1,3 +1,6 @@
+application:
+  name: gravferd-sak
+
 spring:
   application:
     name: gravferd-sak
