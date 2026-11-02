@@ -31,17 +31,17 @@ jobs:
       push-image: true
       byosbom: target/classes/META-INF/sbom/application.cdx.json
       java-version: '25'
-#  deploy-dev:
-#    name: Deploy dev
-#    permissions:
-#      contents: read
-#      id-token: write
-#    needs: [build]
-#    uses: navikt/familie-baks-gha-workflows/.github/workflows/deploy.yaml@main # ratchet:exclude
-#    with:
-#      image: ${{ needs.build.outputs.image }}
-#      cluster: dev-gcp
-#      resource: .nais/app-dev.yaml
+  deploy-dev:
+    name: Deploy dev
+    permissions:
+      contents: read
+      id-token: write
+    needs: [build]
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/deploy.yaml@main # ratchet:exclude
+    with:
+      image: ${{ needs.build.outputs.image }}
+      cluster: dev-gcp
+      resource: .nais/app-dev.yaml
 #  deploy-prod:
 #    name: Deploy prod
 #    permissions:
