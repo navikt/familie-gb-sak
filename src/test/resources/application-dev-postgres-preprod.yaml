@@ -1,0 +1,15 @@
+#spring:
+#  datasource:
+#    url: jdbc:postgresql://localhost:5432/familie-gb-sak
+#    username: postgres
+#    password: test
+#  flyway:
+#    enabled: true
+
+NAIS_APP_NAME: familie-gb-sak
+DEPLOY_ENV: dev
+
+AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token
+
+TILGANGSMASKIN_SCOPE: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
+TILGANGSMASKIN_API_URL: https://tilgangsmaskin.intern.dev.nav.no
