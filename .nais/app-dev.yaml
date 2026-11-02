@@ -32,6 +32,17 @@ spec:
     autoInstrumentation:
       enabled: true
       runtime: java
+  gcp:
+    sqlInstances:
+      - type: POSTGRES_18 # Endres typen, forsvinner alle data. Se nais.io for oppgradering
+        tier: db-custom-1-3840
+        name: gravferd-sak
+        diskAutoresize: true
+        highAvailability: false
+        pointInTimeRecovery: false
+        databases:
+          - name: gravferd-sak
+            envVarPrefix: DB
   azure:
     application:
       enabled: true
