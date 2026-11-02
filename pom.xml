@@ -33,7 +33,7 @@
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
         <sonar.sources>src/main</sonar.sources>
         <sonar.tests>src/test</sonar.tests>
-        <sonar.projectKey>navikt_familie-gb-sak</sonar.projectKey>
+        <sonar.projectKey>navikt_gravferd-sak</sonar.projectKey>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
     </properties>
 
