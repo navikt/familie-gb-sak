@@ -3,3 +3,9 @@ spring:
     url: ${DB_JDBC_URL}
 
 prosessering.rolle: "928636f4-fd0d-4149-978e-a6fb68bb19de" # 0000-GA-STDAPPS
+
+rolle:
+  veileder: "0faf8545-bd93-4bef-9c6e-9f97ea9ad9f1"
+  saksbehandler: "f7c3a202-4679-4f6e-b622-fd93c18f1016"
+  beslutter: "b2a8d228-72bf-4f44-9b9a-abfe1b0f5a31"
+  forvalter: "d1afa9c1-cf0c-4bb4-bc78-7f508f87397b"
