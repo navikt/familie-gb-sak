@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>no.nav.familie.gb.sak</groupId>
+    <groupId>no.nav.gravferd.sak</groupId>
     <artifactId>gravferd-sak</artifactId>
     <version>${revision}${sha1}${changelist}</version>
     <name>gravferd-sak</name>
