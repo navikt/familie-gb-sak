@@ -18,14 +18,3 @@ class RolleConfig(
     @Value("\${rolle.kode7}")
     val KODE7: String,
 )
-
-enum class BehandlerRolle(
-    val nivå: Int,
-) {
-    SYSTEM(5),
-    BESLUTTER(4),
-    SAKSBEHANDLER(3),
-    FORVALTER(2),
-    VEILEDER(1),
-    UKJENT(0),
-}
