@@ -1,3 +1,9 @@
 # Swagger
 AUTHORIZATION_URL: https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/authorize
 TOKEN_URL: https://login.microsoftonline.com/navno.onmicrosoft.com/oauth2/v2.0/token
+
+rolle:
+  veileder: "" #TODO
+  saksbehandler: "" #TODO
+  beslutter: "" #TODO
+  forvalter: "" #TODO

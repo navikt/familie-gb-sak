@@ -16,6 +16,7 @@ class AzureAdAuthenticationManager(
     @Value("\${AZURE_OPENID_CONFIG_JWKS_URI}") jwksUri: String,
     @Value("\${AZURE_OPENID_CONFIG_ISSUER}") issuer: String,
     @Value("\${AZURE_APP_CLIENT_ID}") audience: String,
+    jwtAuthenticationConverter: AzureAdJwtAuthenticationConverter,
 ) : AuthenticationManager {
     private val authenticationManager: AuthenticationManager =
         run {
@@ -28,7 +29,9 @@ class AzureAdAuthenticationManager(
                         ),
                     )
                 }
-            ProviderManager(JwtAuthenticationProvider(decoder))
+            val provider = JwtAuthenticationProvider(decoder)
+            provider.setJwtAuthenticationConverter(jwtAuthenticationConverter)
+            ProviderManager(provider)
         }
 
     override fun authenticate(authentication: Authentication): Authentication = authenticationManager.authenticate(authentication)
