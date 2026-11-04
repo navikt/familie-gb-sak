@@ -1,13 +1,11 @@
 logging:
   config: "classpath:logback-devlauncher.xml"
 
-#spring:
-#  datasource:
-#    url: jdbc:postgresql://localhost:5432/gravferd-sak
-#    username: postgres
-#    password: test
-#  flyway:
-#    enabled: true
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/gravferd-sak
+    username: postgres
+    password: test
 
 prosessering.rolle: "928636f4-fd0d-4149-978e-a6fb68bb19de" # 0000-GA-STDAPPS
 
@@ -26,3 +24,6 @@ AZURE_OPENID_CONFIG_TOKEN_ENDPOINT: https://login.microsoftonline.com/navq.onmic
 
 TILGANGSMASKIN_SCOPE: api://dev-gcp.tilgangsmaskin.populasjonstilgangskontroll/.default
 TILGANGSMASKIN_API_URL: https://tilgangsmaskin.intern.dev.nav.no
+
+AUTHORIZATION_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/authorize
+TOKEN_URL: https://login.microsoftonline.com/navq.onmicrosoft.com/oauth2/v2.0/token

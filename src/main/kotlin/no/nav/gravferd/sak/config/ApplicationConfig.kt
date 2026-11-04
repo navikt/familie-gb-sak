@@ -8,7 +8,7 @@ import org.springframework.resilience.annotation.EnableResilientMethods
 
 @SpringBootConfiguration
 @ComponentScan(
-    // "no.nav.familie.prosessering",
+    "no.nav.familie.prosessering",
     "no.nav.familie.unleash",
     ApplicationConfig.PAKKENAVN,
     "no.nav.familie.metrikker",
