@@ -1,6 +1,6 @@
 package no.nav.gravferd.sak.sikkerhet
 
-import no.nav.gravferd.sak.config.RolleConfig
+import no.nav.gravferd.sak.sikkerhet.TestRolleConfig.rolleConfig
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
@@ -8,15 +8,6 @@ import org.junit.jupiter.params.provider.CsvSource
 import org.springframework.security.oauth2.jwt.Jwt
 
 class AzureAdJwtAuthenticationConverterTest {
-    private val rolleConfig =
-        RolleConfig(
-            beslutterRolle = "beslutter-gruppe",
-            saksbehandlerRolle = "saksbehandler-gruppe",
-            veilederRolle = "veileder-gruppe",
-            forvalterRolle = "forvalter-gruppe",
-            kode6 = "kode6-gruppe",
-            kode7 = "kode7-gruppe",
-        )
     private val converter = AzureAdJwtAuthenticationConverter(rolleConfig)
 
     @ParameterizedTest
@@ -26,7 +17,7 @@ class AzureAdJwtAuthenticationConverterTest {
         "saksbehandler-gruppe, ROLE_SAKSBEHANDLER",
         "beslutter-gruppe, ROLE_BESLUTTER",
     )
-    fun `mapper hver kjent gruppe til kun tilhorende rolle`(
+    fun `mapper hver kjent gruppe til kun tilhørende rolle`(
         gruppe: String,
         forventetAuthority: String,
     ) {
@@ -41,7 +32,7 @@ class AzureAdJwtAuthenticationConverterTest {
     }
 
     @Test
-    fun `mapper flere kjente grupper til alle tilhorende roller`() {
+    fun `mapper flere kjente grupper til alle tilhørende roller`() {
         // Arrange
         val jwt =
             jwtMedGrupper(

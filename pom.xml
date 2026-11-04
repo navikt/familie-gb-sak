@@ -36,6 +36,7 @@
         <sonar.projectKey>navikt_gravferd-sak</sonar.projectKey>
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
+        <mock-oauth2-server.version>6.1.3</mock-oauth2-server.version>
     </properties>
 
     <repositories>
@@ -193,6 +194,12 @@
             <artifactId>testcontainers</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>no.nav.security</groupId>
+            <artifactId>mock-oauth2-server</artifactId>
+            <version>${mock-oauth2-server.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -282,6 +289,22 @@
                 <groupId>org.sonarsource.scanner.maven</groupId>
                 <artifactId>sonar-maven-plugin</artifactId>
                 <version>${sonar-maven-plugin.version}</version>
+            </plugin>
+            <plugin>
+                <!-- Parallell testkjøring. Gjelder bare via Maven, ikke IntelliJ sin egen testkjører.
+                     Tester som deler tilstand må merkes med @ResourceLock eller @Execution(SAME_THREAD). -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <configuration>
+                    <properties>
+                        <configurationParameters>
+                            junit.jupiter.execution.parallel.enabled=true
+                            junit.jupiter.execution.parallel.mode.default=concurrent
+                            junit.jupiter.execution.parallel.mode.classes.default=concurrent
+                            junit.jupiter.execution.parallel.config.strategy=dynamic
+                        </configurationParameters>
+                    </properties>
+                </configuration>
             </plugin>
         </plugins>
     </build>
