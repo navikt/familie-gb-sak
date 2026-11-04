@@ -11,12 +11,14 @@ import no.nav.gravferd.sak.sikkerhet.TestTokenServer.DEFAULT_SUBJECT
 import no.nav.gravferd.sak.sikkerhet.TestTokenServer.token
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.oauth2.server.resource.authentication.BearerTokenAuthenticationToken
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 import java.util.UUID
 
+@Tag("integration")
 class AzureAdAuthenticationManagerTest {
     private val authenticationManager =
         AzureAdAuthenticationManager(

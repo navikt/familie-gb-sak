@@ -1,6 +1,5 @@
-package no.nav.gravferd.sak.config
+package no.nav.gravferd.sak.fake
 
-import no.nav.gravferd.sak.fake.FakeLeaderClientService
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.annotation.Primary

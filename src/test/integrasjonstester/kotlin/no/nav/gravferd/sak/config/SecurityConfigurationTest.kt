@@ -9,6 +9,7 @@ import no.nav.gravferd.sak.sikkerhet.TestTokenServerConfig
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.startsWith
 import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.ValueSource
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
+@Tag("integration")
 @SpringJUnitWebConfig(SecurityConfigurationTest.TestConfig::class)
 class SecurityConfigurationTest {
     @Configuration
