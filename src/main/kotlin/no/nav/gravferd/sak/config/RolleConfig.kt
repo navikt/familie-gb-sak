@@ -6,15 +6,15 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 class RolleConfig(
     @Value("\${rolle.beslutter}")
-    val BESLUTTER_ROLLE: String,
+    val beslutterRolle: String,
     @Value("\${rolle.saksbehandler}")
-    val SAKSBEHANDLER_ROLLE: String,
+    val saksbehandlerRolle: String,
     @Value("\${rolle.veileder}")
-    val VEILEDER_ROLLE: String,
+    val veilederRolle: String,
     @Value("\${rolle.forvalter}")
-    val FORVALTER_ROLLE: String,
+    val forvalterRolle: String,
     @Value("\${rolle.kode6}")
-    val KODE6: String,
+    val kode6: String,
     @Value("\${rolle.kode7}")
-    val KODE7: String,
+    val kode7: String,
 )

@@ -10,12 +10,12 @@ import org.springframework.security.oauth2.jwt.Jwt
 class AzureAdJwtAuthenticationConverterTest {
     private val rolleConfig =
         RolleConfig(
-            BESLUTTER_ROLLE = "beslutter-gruppe",
-            SAKSBEHANDLER_ROLLE = "saksbehandler-gruppe",
-            VEILEDER_ROLLE = "veileder-gruppe",
-            FORVALTER_ROLLE = "forvalter-gruppe",
-            KODE6 = "kode6-gruppe",
-            KODE7 = "kode7-gruppe",
+            beslutterRolle = "beslutter-gruppe",
+            saksbehandlerRolle = "saksbehandler-gruppe",
+            veilederRolle = "veileder-gruppe",
+            forvalterRolle = "forvalter-gruppe",
+            kode6 = "kode6-gruppe",
+            kode7 = "kode7-gruppe",
         )
     private val converter = AzureAdJwtAuthenticationConverter(rolleConfig)
 
@@ -46,10 +46,10 @@ class AzureAdJwtAuthenticationConverterTest {
         val jwt =
             jwtMedGrupper(
                 listOf(
-                    rolleConfig.VEILEDER_ROLLE,
-                    rolleConfig.FORVALTER_ROLLE,
-                    rolleConfig.SAKSBEHANDLER_ROLLE,
-                    rolleConfig.BESLUTTER_ROLLE,
+                    rolleConfig.veilederRolle,
+                    rolleConfig.forvalterRolle,
+                    rolleConfig.saksbehandlerRolle,
+                    rolleConfig.beslutterRolle,
                 ),
             )
 
@@ -69,7 +69,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `ignorerer ukjente grupper sammen med kjente grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf("ukjent-gruppe", rolleConfig.SAKSBEHANDLER_ROLLE))
+        val jwt = jwtMedGrupper(listOf("ukjent-gruppe", rolleConfig.saksbehandlerRolle))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -81,7 +81,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ikke dupliserte roller ved gjentatte grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleConfig.VEILEDER_ROLLE, rolleConfig.VEILEDER_ROLLE))
+        val jwt = jwtMedGrupper(listOf(rolleConfig.veilederRolle, rolleConfig.veilederRolle))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -134,7 +134,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `kode6 og kode7 gir ikke behandlerroller`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleConfig.KODE6, rolleConfig.KODE7))
+        val jwt = jwtMedGrupper(listOf(rolleConfig.kode6, rolleConfig.kode7))
 
         // Act
         val authentication = converter.convert(jwt)
