@@ -29,7 +29,7 @@ object TestTokenServer {
     }
 
     fun token(
-        grupper: List<String> = emptyList(),
+        grupper: List<String>? = emptyList(),
         subject: String = DEFAULT_SUBJECT,
         audience: String = DEFAULT_AUDIENCE,
         ekstraClaims: Map<String, Any> = emptyMap(),
@@ -43,7 +43,13 @@ object TestTokenServer {
                     issuerId = AZUREAD_ISSUER_ID,
                     subject = subject,
                     audience = listOf(audience),
-                    claims = mapOf("groups" to grupper, "azp" to DEFAULT_CLIENT_ID, "NAVident" to "Z999999") + ekstraClaims,
+                    claims =
+                        buildMap {
+                            grupper?.let { put("groups", it) }
+                            put("azp", DEFAULT_CLIENT_ID)
+                            put("NAVident", "Z999999")
+                            putAll(ekstraClaims)
+                        },
                     expiry = expiry,
                 ),
             ).serialize()

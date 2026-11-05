@@ -123,9 +123,9 @@ class AzureAdJwtAuthenticationConverterTest {
     }
 
     @Test
-    fun `kode6 og kode7 gir ikke behandlerroller`() {
+    fun `kode6 gir ikke behandlerroller`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleConfig.kode6, rolleConfig.kode7))
+        val jwt = jwtMedGrupper(listOf(rolleConfig.kode6))
 
         // Act
         val authentication = converter.convert(jwt)

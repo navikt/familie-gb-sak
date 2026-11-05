@@ -124,17 +124,77 @@ class SecurityConfigurationTest {
 
     @Test
     fun `beskyttet endepunkt med ugyldig token gir 401`() {
-        val token = token(audience = "annen-app")
+        // Arrange
+        val token = token(audience = "annen-app", grupper = listOf(rolleConfig.saksbehandlerRolle))
 
+        // Act & Assert
         mockMvc
             .perform(get("/api/test").header("Authorization", "Bearer $token"))
             .andExpect(status().isUnauthorized)
     }
 
+    @ParameterizedTest
+    @ValueSource(strings = ["veileder-gruppe", "forvalter-gruppe", "saksbehandler-gruppe", "beslutter-gruppe"])
+    fun `hver tillatte AD-gruppe gir tilgang til beskyttet endepunkt`(gruppe: String) {
+        // Arrange
+        val token = token(grupper = listOf(gruppe))
+
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isOk)
+    }
+
     @Test
-    fun `beskyttet endepunkt med gyldig token gir 200`() {
+    fun `gyldig token uten grupper gir 403`() {
+        // Arrange
         val token = token()
 
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `gyldig token uten groups claim gir 403`() {
+        // Arrange
+        val token = token(grupper = null)
+
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `gyldig token med ukjent gruppe gir 403`() {
+        // Arrange
+        val token = token(grupper = listOf("ukjent-gruppe"))
+
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `kode6 alene gir ikke tilgang til beskyttet endepunkt`() {
+        // Arrange
+        val token = token(grupper = listOf(rolleConfig.kode6))
+
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `kjent gruppe sammen med ukjente grupper gir tilgang`() {
+        // Arrange
+        val token = token(grupper = listOf("ukjent-gruppe", rolleConfig.saksbehandlerRolle))
+
+        // Act & Assert
         mockMvc
             .perform(get("/api/test").header("Authorization", "Bearer $token"))
             .andExpect(status().isOk)
@@ -142,11 +202,40 @@ class SecurityConfigurationTest {
 
     @Test
     fun `post med gyldig token gir 200 uten csrf-token`() {
-        val token = token()
+        // Arrange
+        val token = token(grupper = listOf(rolleConfig.saksbehandlerRolle))
 
+        // Act & Assert
         mockMvc
             .perform(post("/api/test").header("Authorization", "Bearer $token"))
             .andExpect(status().isOk)
+    }
+
+    @Test
+    fun `post uten tillatt rolle gir 403 selv med gyldig token`() {
+        // Arrange
+        val token = token()
+
+        // Act & Assert
+        mockMvc
+            .perform(post("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isForbidden)
+    }
+
+    @Test
+    fun `godkjent kall oppretter ikke sesjon eller autentiserer neste kall`() {
+        // Arrange
+        val token = token(grupper = listOf(rolleConfig.veilederRolle))
+
+        // Act & Assert
+        mockMvc
+            .perform(get("/api/test").header("Authorization", "Bearer $token"))
+            .andExpect(status().isOk)
+            .andExpect { assertThat(it.request.getSession(false)).isNull() }
+
+        mockMvc
+            .perform(get("/api/test"))
+            .andExpect(status().isUnauthorized)
     }
 
     @Test

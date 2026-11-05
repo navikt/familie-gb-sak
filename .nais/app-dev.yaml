@@ -51,11 +51,12 @@ spec:
         extra:
           - "NAVident"
         groups:
-          - id: "928636f4-fd0d-4149-978e-a6fb68bb19de"  # 0000-GA-STDAPPS (Prosessering)
+          - id: "928636f4-fd0d-4149-978e-a6fb68bb19de" # 0000-GA-STDAPPS (Prosessering)
           - id: "0faf8545-bd93-4bef-9c6e-9f97ea9ad9f1" # 0000-CA-Gravferd-Veileder
           - id: "f7c3a202-4679-4f6e-b622-fd93c18f1016" # 0000-CA-Gravferd-Saksbehandler
           - id: "b2a8d228-72bf-4f44-9b9a-abfe1b0f5a31" # 0000-CA-Gravferd-Beslutter
           - id: "d1afa9c1-cf0c-4bb4-bc78-7f508f87397b" # 0000-CA-Gravferd-Forvalter
+          - id: "a1b518e2-3947-478d-8929-e5d685c47cac" # 0000-GA-Strengt_Fortrolig_Adresse
       replyURLs:
         - "https://gravferd-sak.intern.dev.nav.no/swagger-ui/oauth2-redirect.html"
         - "http://localhost:8091/swagger-ui/oauth2-redirect.html"
