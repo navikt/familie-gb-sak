@@ -73,6 +73,7 @@ gravferd-sak is a Kotlin and Spring Boot backend for case handling of funeral gr
 ## What to look for
 
 - **Access control.** New or changed endpoints in `adapter/inn/` must require an Azure AD token, check role (`Rolle`, `RolleConfig`) and check population access through tilgangsmaskinen for every person the request touches. Authentication alone is not enough. Flag missing ownership or population checks, and IDs taken from the request that are not checked.
+- **Endpoint protection.** Token validation and role checks for all endpoints are set up in `config/SecurityConfiguration.kt` (filter chains, public paths, required roles), `sikkerhet/AzureAdAuthenticationManager.kt` (issuer, audience, JWKS) and `sikkerhet/AzureAdJwtAuthenticationConverter.kt` (mapping from groups to roles). Read them as context when assessing endpoints. Flag changes that weaken them, such as new public paths, removed issuer or audience validation, or roles granted too broadly.
 - **Personal data in logs.** Fødselsnummer, name, address and aktørId may only go to `secureLogger`, never to ordinary loggers, exception messages, metrics labels or HTTP responses for errors.
 - **Personal data in URLs.** Fødselsnummer must never be part of a URL (path or query parameter), neither in our endpoints in `adapter/inn/` nor in outbound calls in `adapter/ut/`. It must be sent in the request body, for example with POST.
 - **Injection.** SQL built with string concatenation or templates instead of bound parameters.
