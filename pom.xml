@@ -37,6 +37,7 @@
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
         <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
+        <argLine/>
     </properties>
 
     <repositories>
@@ -293,6 +294,19 @@
                         <plugin>spring</plugin>
                     </compilerPlugins>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>test-compile</id>
+                        <configuration>
+                            <sourceDirs>
+                                <sourceDir>${project.basedir}/src/test/enhetstester/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/integrasjonstester/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/felles/kotlin</sourceDir>
+                                <sourceDir>${project.basedir}/src/test/lokal/kotlin</sourceDir>
+                            </sourceDirs>
+                        </configuration>
+                    </execution>
+                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
@@ -312,11 +326,21 @@
                 <version>${sonar-maven-plugin.version}</version>
             </plugin>
             <plugin>
-                <!-- Parallell testkjøring. Gjelder bare via Maven, ikke IntelliJ sin egen testkjører.
-                     Tester som deler tilstand må merkes med @ResourceLock eller @Execution(SAME_THREAD). -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>properties</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
+                    <argLine>@{argLine} -javaagent:${org.mockito:mockito-core:jar} -Xshare:off -Dslf4j.internal.verbosity=ERROR</argLine>
                     <properties>
                         <configurationParameters>
                             junit.jupiter.execution.parallel.enabled=true
