@@ -37,6 +37,8 @@
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
         <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
+        <kotlinx-kover.version>0.9.9</kotlinx-kover.version>
+        <kover.reportXml.path>${project.build.directory}/site/kover/report.xml</kover.reportXml.path>
         <argLine/>
     </properties>
 
@@ -367,4 +369,53 @@
             </plugin>
         </plugins>
     </build>
+
+    <!-- Brukes av pull-request.yaml for å kjøre enhetstester og integrasjonstester som egne jobber.
+         Integrasjonstester markeres med @Tag("integration"). Uten profil kjøres alle testene. -->
+    <profiles>
+        <profile>
+            <id>enhetstest</id>
+            <properties>
+                <excludedGroups>integration</excludedGroups>
+                <kover.reportXml.path>target/coverage/enhetstest.xml</kover.reportXml.path>
+            </properties>
+        </profile>
+        <profile>
+            <id>integrasjonstest</id>
+            <properties>
+                <groups>integration</groups>
+                <kover.reportXml.path>target/coverage/integrasjonstest.xml</kover.reportXml.path>
+            </properties>
+        </profile>
+        <profile>
+            <!-- Dekningsrapport til Sonar. Slås på med with-coverage i workflowene -->
+            <id>coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jetbrains.kotlinx</groupId>
+                        <artifactId>kover-maven-plugin</artifactId>
+                        <version>${kotlinx-kover.version}</version>
+                        <executions>
+                            <execution>
+                                <id>instr</id>
+                                <goals>
+                                    <goal>instrumentation</goal>
+                                </goals>
+                            </execution>
+                            <execution>
+                                <id>kover-xml</id>
+                                <goals>
+                                    <goal>report-xml</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                        <configuration>
+                            <xmlFile>${kover.reportXml.path}</xmlFile>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
