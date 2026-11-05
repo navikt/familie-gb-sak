@@ -36,7 +36,7 @@
         <sonar.projectKey>navikt_gravferd-sak</sonar.projectKey>
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
-        <mock-oauth2-server.version>6.1.3</mock-oauth2-server.version>
+        <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
     </properties>
 
     <repositories>
