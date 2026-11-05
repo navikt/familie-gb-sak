@@ -57,7 +57,7 @@ safe-outputs:
   add-comment:
     max: 1
     target: "${{ github.event.pull_request.number || github.event.inputs.pr-number }}"
-    hide-older-comments: true
+    replace-older-comments: true
 ---
 
 # Sikkerhetsreview
