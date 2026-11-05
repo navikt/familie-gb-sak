@@ -64,11 +64,7 @@ safe-outputs:
 
 Review pull request #${{ github.event.pull_request.number || github.event.inputs.pr-number }} for security and personal data issues. Use the GitHub tools only to read this pull request (metadata, diff, changed files) and files it touches or calls.
 
-## Revision consistency
-
-1. Read the pull request metadata first. Save the full `head.sha` and `base.sha` as the review snapshot. For a `pull_request` event, require `head.sha` to match `${{ github.event.pull_request.head.sha }}`. For `workflow_dispatch`, use the head SHA returned by this initial metadata read.
-2. Read every file from `navikt/gravferd-sak` with `get_file_contents`, using the full snapshot commit SHA as `ref`, never a branch name or the default branch. This also works for pull requests from forks. Read changed code and its context at `head.sha` and previous versions at `base.sha`. A missing file after deletion is expected; assess its previous version and the diff.
-3. PR diff and changed-file APIs are mutable. Immediately before submitting the report, read the metadata again and require both SHAs to match the snapshot. If either SHA changed, stop the assessment and post only the `⚠️` heading with the snapshot SHAs, an explanation that the PR changed during review, and a request to rerun. Do not publish findings or a clean result for the new revision. If a consistency check fails because metadata is unavailable, also report an incomplete review.
+Read files with `get_file_contents` from the pull request's latest commit.
 
 ## Context
 
@@ -78,6 +74,7 @@ gravferd-sak is a Kotlin and Spring Boot backend for case handling of funeral gr
 
 - **Access control.** New or changed endpoints in `adapter/inn/` must require an Azure AD token, check role (`Rolle`, `RolleConfig`) and check population access through tilgangsmaskinen for every person the request touches. Authentication alone is not enough. Flag missing ownership or population checks, and IDs taken from the request that are not checked.
 - **Personal data in logs.** Fødselsnummer, name, address and aktørId may only go to `secureLogger`, never to ordinary loggers, exception messages, metrics labels or HTTP responses for errors.
+- **Personal data in URLs.** Fødselsnummer must never be part of a URL (path or query parameter), neither in our endpoints in `adapter/inn/` nor in outbound calls in `adapter/ut/`. It must be sent in the request body, for example with POST.
 - **Injection.** SQL built with string concatenation or templates instead of bound parameters.
 - **Outbound calls.** HTTP clients in `adapter/ut/` that send tokens to the wrong audience, disable TLS validation, or forward the user token where on-behalf-of or client credentials is expected.
 - **Secrets.** Hardcoded tokens, passwords or keys. Secrets must come from the environment.
@@ -102,7 +99,6 @@ gravferd-sak is a Kotlin and Spring Boot backend for case handling of funeral gr
   - `🚩` if there is at least one finding, also when the review is incomplete.
   - `⚠️` if there are no findings, but missing file access, a truncated diff, missing security-relevant context or a tool failure prevented assessment of a security-relevant change. Describe the gaps and what is needed to complete the review. Never claim a clean result.
   - `✅` if there are no findings and all security-relevant changes and the context needed to assess them were analyzed.
-- Next, one line with the short head and base SHAs, stating that the report applies only to that snapshot.
 - With `✅`: add at most three bullets on what was assessed, then «Ikke gjennomgått». No other sections.
 - With findings: a «Funn» section with one entry per finding, then any coverage gaps, then «Ikke gjennomgått».
 - End with a «Ikke gjennomgått» section listing changed files you did not analyze and why. Omit it when there is nothing to list.
