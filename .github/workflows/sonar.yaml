@@ -12,8 +12,33 @@ concurrency:
 permissions: {}
 
 jobs:
+  enhetstest:
+    name: Enhetstest
+    permissions:
+      contents: read
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/pull-request-maven.yaml@main # ratchet:exclude
+    with:
+      profile: 'enhetstest'
+      with-coverage: true
+      coverage-artifact-name: 'enhetstest'
+      coverage-artifact-path: 'target/coverage/enhetstest.xml'
+      java-version: '25'
+
+  integrasjonstest:
+    name: Integrasjonstest
+    permissions:
+      contents: read
+    uses: navikt/familie-baks-gha-workflows/.github/workflows/pull-request-maven.yaml@main # ratchet:exclude
+    with:
+      profile: 'integrasjonstest'
+      with-coverage: true
+      coverage-artifact-name: 'integrasjonstest'
+      coverage-artifact-path: 'target/coverage/integrasjonstest.xml'
+      java-version: '25'
+
   sonar:
     name: Sonar
+    needs: [ enhetstest, integrasjonstest ]
     runs-on: 'ubuntu-latest'
     timeout-minutes: 30
     permissions:
@@ -30,6 +55,16 @@ jobs:
           java-version: '25'
           distribution: 'temurin'
           cache: 'maven'
+      - name: Last ned enhetstest report artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # ratchet:actions/download-artifact@v8.0.2
+        with:
+          name: 'enhetstest'
+          path: 'coverage/enhetstest'
+      - name: Last ned integrasjonstest report artifact
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # ratchet:actions/download-artifact@v8.0.2
+        with:
+          name: 'integrasjonstest'
+          path: 'coverage/integrasjonstest'
       - name: Cache Sonar packages
         uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # ratchet:actions/cache@v5
         with:
@@ -41,4 +76,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           GITHUB_USERNAME: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: mvn -B --no-transfer-progress compile sonar:sonar --settings .m2/maven-settings.xml
+        run: >-
+          mvn -B --no-transfer-progress compile sonar:sonar --settings .m2/maven-settings.xml
+          -Dsonar.coverage.jacoco.xmlReportPaths="coverage/enhetstest/enhetstest.xml,coverage/integrasjonstest/integrasjonstest.xml"
