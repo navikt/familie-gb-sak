@@ -68,8 +68,7 @@ Review pull request #${{ github.event.pull_request.number || github.event.inputs
 
 1. Read the pull request metadata first. Save the full `head.sha` and `base.sha` as the review snapshot. For a `pull_request` event, require `head.sha` to match `${{ github.event.pull_request.head.sha }}`. For `workflow_dispatch`, use the head SHA returned by this initial metadata read.
 2. Read every file from `navikt/gravferd-sak` with `get_file_contents`, using the full snapshot commit SHA as `ref`, never a branch name or the default branch. This also works for pull requests from forks. Read changed code and its context at `head.sha` and previous versions at `base.sha`. A missing file after deletion is expected; assess its previous version and the diff.
-3. PR diff and changed-file APIs are mutable. Immediately before submitting the report, read the metadata again and require both SHAs to match the snapshot. If either SHA changed, stop the assessment and post only «Resultat: ⚠️ Ufullstendig sikkerhetsreview.» with the snapshot SHAs, an explanation that the PR changed during review, and a request to rerun. Do not publish findings or a clean result for the new revision. If a consistency check fails because metadata is unavailable, also report an incomplete review.
-4. Always identify the reviewed head and base SHAs in the report. State that the report applies only to that snapshot, not to subsequent commits.
+3. PR diff and changed-file APIs are mutable. Immediately before submitting the report, read the metadata again and require both SHAs to match the snapshot. If either SHA changed, stop the assessment and post only the `⚠️` heading with the snapshot SHAs, an explanation that the PR changed during review, and a request to rerun. Do not publish findings or a clean result for the new revision. If a consistency check fails because metadata is unavailable, also report an incomplete review.
 
 ## Context
 
@@ -98,9 +97,14 @@ gravferd-sak is a Kotlin and Spring Boot backend for case handling of funeral gr
 - Report only credible issues caused by changed behaviour. Give each finding severity (high, medium, low), confidence (high, medium, low), file and line, impact and a recommended fix.
 - Skip tests, generated files and style issues.
 - Do not review or read files under `.github/`. Zizmor covers them in a separate workflow. List changed `.github/` files in «Ikke gjennomgått» as «dekket av zizmor». They never make the review incomplete.
-- Write the report in Norwegian bokmål, short and concrete, with markdown headings and bullet lists.
-- Always end with a «Ikke gjennomgått» section listing changed files you did not analyze and why.
-- If no issues are found and all security-relevant changes and the context needed to assess them were analyzed, write «Resultat: ✅ Ingen sikkerhetsfunn i gjennomgått omfang.»
-- If missing file access, a truncated diff, missing security-relevant context or a tool failure prevents assessment of any security-relevant change, write «Resultat: ⚠️ Ufullstendig sikkerhetsreview.» Report any supported findings, describe the coverage gaps and what is needed to complete the review, and do not claim a clean result.
+- Write the report in Norwegian bokmål, short and concrete. Do not describe what the changes do unless it explains a finding or a gap.
+- Start with the heading `## <status> Sikkerhetsreview`. Pick the status:
+  - `🚩` if there is at least one finding, also when the review is incomplete.
+  - `⚠️` if there are no findings, but missing file access, a truncated diff, missing security-relevant context or a tool failure prevented assessment of a security-relevant change. Describe the gaps and what is needed to complete the review. Never claim a clean result.
+  - `✅` if there are no findings and all security-relevant changes and the context needed to assess them were analyzed.
+- Next, one line with the short head and base SHAs, stating that the report applies only to that snapshot.
+- With `✅`: add at most three bullets on what was assessed, then «Ikke gjennomgått». No other sections.
+- With findings: a «Funn» section with one entry per finding, then any coverage gaps, then «Ikke gjennomgått».
+- End with a «Ikke gjennomgått» section listing changed files you did not analyze and why. Omit it when there is nothing to list.
 
 Submit the report with the add-comment safe output.
