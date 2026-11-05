@@ -1,6 +1,7 @@
 package no.nav.gravferd.sak.config
 
 import no.nav.gravferd.sak.sikkerhet.AzureAdAuthenticationManager
+import no.nav.gravferd.sak.sikkerhet.Rolle.Companion.rollerMedInternTilgang
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -44,7 +45,7 @@ class SecurityConfiguration(
             csrf { disable() }
             sessionManagement { sessionCreationPolicy = SessionCreationPolicy.STATELESS }
             authorizeHttpRequests {
-                authorize(anyRequest, authenticated)
+                authorize(anyRequest, hasAnyRole(*rollerMedInternTilgang()))
             }
             oauth2ResourceServer {
                 jwt {
