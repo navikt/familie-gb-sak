@@ -1,18 +1,12 @@
 package no.nav.gravferd.sak.config
 
-import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.Configuration
+import org.springframework.boot.context.properties.ConfigurationProperties
 
-@Configuration
+@ConfigurationProperties("rolle")
 class RolleConfig(
-    @Value("\${rolle.beslutter}")
-    val beslutterRolle: String,
-    @Value("\${rolle.saksbehandler}")
-    val saksbehandlerRolle: String,
-    @Value("\${rolle.veileder}")
-    val veilederRolle: String,
-    @Value("\${rolle.forvalter}")
-    val forvalterRolle: String,
-    @Value("\${rolle.kode6}")
+    val beslutter: String,
+    val saksbehandler: String,
+    val veileder: String,
+    val forvalter: String,
     val kode6: String,
 )

@@ -37,10 +37,10 @@ class AzureAdJwtAuthenticationConverterTest {
         val jwt =
             jwtMedGrupper(
                 listOf(
-                    rolleConfig.veilederRolle,
-                    rolleConfig.forvalterRolle,
-                    rolleConfig.saksbehandlerRolle,
-                    rolleConfig.beslutterRolle,
+                    rolleConfig.veileder,
+                    rolleConfig.forvalter,
+                    rolleConfig.saksbehandler,
+                    rolleConfig.beslutter,
                 ),
             )
 
@@ -60,7 +60,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `ignorerer ukjente grupper sammen med kjente grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf("ukjent-gruppe", rolleConfig.saksbehandlerRolle))
+        val jwt = jwtMedGrupper(listOf("ukjent-gruppe", rolleConfig.saksbehandler))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -72,7 +72,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ikke dupliserte roller ved gjentatte grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleConfig.veilederRolle, rolleConfig.veilederRolle))
+        val jwt = jwtMedGrupper(listOf(rolleConfig.veileder, rolleConfig.veileder))
 
         // Act
         val authentication = converter.convert(jwt)

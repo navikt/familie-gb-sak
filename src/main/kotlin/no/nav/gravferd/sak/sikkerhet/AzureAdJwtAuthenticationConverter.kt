@@ -17,10 +17,10 @@ class AzureAdJwtAuthenticationConverter(
 
         val roller =
             buildSet {
-                if (grupper.contains(rolleConfig.veilederRolle)) add(Rolle.VEILEDER)
-                if (grupper.contains(rolleConfig.forvalterRolle)) add(Rolle.FORVALTER)
-                if (grupper.contains(rolleConfig.saksbehandlerRolle)) add(Rolle.SAKSBEHANDLER)
-                if (grupper.contains(rolleConfig.beslutterRolle)) add(Rolle.BESLUTTER)
+                if (grupper.contains(rolleConfig.veileder)) add(Rolle.VEILEDER)
+                if (grupper.contains(rolleConfig.forvalter)) add(Rolle.FORVALTER)
+                if (grupper.contains(rolleConfig.saksbehandler)) add(Rolle.SAKSBEHANDLER)
+                if (grupper.contains(rolleConfig.beslutter)) add(Rolle.BESLUTTER)
             }
 
         if (roller.isEmpty()) {

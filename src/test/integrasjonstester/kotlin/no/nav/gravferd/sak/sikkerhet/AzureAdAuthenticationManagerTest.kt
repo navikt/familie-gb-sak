@@ -31,7 +31,7 @@ class AzureAdAuthenticationManagerTest {
     @Test
     fun `godtar gyldig token og mapper grupper til roller`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.saksbehandlerRolle))
+        val token = token(grupper = listOf(rolleConfig.saksbehandler))
 
         // Act
         val authentication = authenticationManager.authenticate(BearerTokenAuthenticationToken(token))
@@ -111,7 +111,7 @@ class AzureAdAuthenticationManagerTest {
     fun `avviser token med manipulert payload`() {
         // Arrange
         val gyldig = token().split(".")
-        val annen = token(grupper = listOf(rolleConfig.beslutterRolle)).split(".")
+        val annen = token(grupper = listOf(rolleConfig.beslutter)).split(".")
         val token = listOf(gyldig[0], annen[1], gyldig[2]).joinToString(".")
 
         // Act

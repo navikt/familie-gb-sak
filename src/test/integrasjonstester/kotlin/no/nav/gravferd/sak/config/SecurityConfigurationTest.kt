@@ -125,7 +125,7 @@ class SecurityConfigurationTest {
     @Test
     fun `beskyttet endepunkt med ugyldig token gir 401`() {
         // Arrange
-        val token = token(audience = "annen-app", grupper = listOf(rolleConfig.saksbehandlerRolle))
+        val token = token(audience = "annen-app", grupper = listOf(rolleConfig.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -192,7 +192,7 @@ class SecurityConfigurationTest {
     @Test
     fun `kjent gruppe sammen med ukjente grupper gir tilgang`() {
         // Arrange
-        val token = token(grupper = listOf("ukjent-gruppe", rolleConfig.saksbehandlerRolle))
+        val token = token(grupper = listOf("ukjent-gruppe", rolleConfig.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -203,7 +203,7 @@ class SecurityConfigurationTest {
     @Test
     fun `post med gyldig token gir 200 uten csrf-token`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.saksbehandlerRolle))
+        val token = token(grupper = listOf(rolleConfig.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -225,7 +225,7 @@ class SecurityConfigurationTest {
     @Test
     fun `godkjent kall oppretter ikke sesjon eller autentiserer neste kall`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.veilederRolle))
+        val token = token(grupper = listOf(rolleConfig.veileder))
 
         // Act & Assert
         mockMvc
@@ -248,7 +248,7 @@ class SecurityConfigurationTest {
 
     @Test
     fun `PreAuthorize avviser bruker uten påkrevd rolle`() {
-        val token = token(grupper = listOf(rolleConfig.veilederRolle))
+        val token = token(grupper = listOf(rolleConfig.veileder))
 
         mockMvc
             .perform(get("/api/beslutter").header("Authorization", "Bearer $token"))
@@ -257,7 +257,7 @@ class SecurityConfigurationTest {
 
     @Test
     fun `PreAuthorize slipper inn bruker med påkrevd rolle`() {
-        val token = token(grupper = listOf(rolleConfig.beslutterRolle))
+        val token = token(grupper = listOf(rolleConfig.beslutter))
 
         mockMvc
             .perform(get("/api/beslutter").header("Authorization", "Bearer $token"))
