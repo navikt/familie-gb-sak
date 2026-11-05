@@ -10,6 +10,5 @@ object TestRolleConfig {
             veilederRolle = "veileder-gruppe",
             forvalterRolle = "forvalter-gruppe",
             kode6 = "kode6-gruppe",
-            kode7 = "kode7-gruppe",
         )
 }

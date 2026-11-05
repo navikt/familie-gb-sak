@@ -15,6 +15,4 @@ class RolleConfig(
     val forvalterRolle: String,
     @Value("\${rolle.kode6}")
     val kode6: String,
-    @Value("\${rolle.kode7}")
-    val kode7: String,
 )

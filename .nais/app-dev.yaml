@@ -57,7 +57,6 @@ spec:
           - id: "b2a8d228-72bf-4f44-9b9a-abfe1b0f5a31" # 0000-CA-Gravferd-Beslutter
           - id: "d1afa9c1-cf0c-4bb4-bc78-7f508f87397b" # 0000-CA-Gravferd-Forvalter
           - id: "a1b518e2-3947-478d-8929-e5d685c47cac" # 0000-GA-Strengt_Fortrolig_Adresse
-          - id: "2e1dc582-f762-4510-a660-88bf68fb7128" # 0000-GA-Fortrolig_Adresse
       replyURLs:
         - "https://gravferd-sak.intern.dev.nav.no/swagger-ui/oauth2-redirect.html"
         - "http://localhost:8091/swagger-ui/oauth2-redirect.html"
