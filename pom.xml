@@ -37,7 +37,7 @@
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
         <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
-        <kotlinx-kover.version>0.9.9</kotlinx-kover.version>
+        <kotlinx-kover.version>0.9.11</kotlinx-kover.version>
         <kover.reportXml.path>${project.build.directory}/site/kover/report.xml</kover.reportXml.path>
         <argLine/>
     </properties>
