@@ -25,9 +25,9 @@
         <changelist>-SNAPSHOT</changelist>
         <felles.version>4.20261026180911_c3ff6d9</felles.version>
         <prosessering.version>2.20261102130928_50eba5f</prosessering.version>
-        <felles-kontrakter.version>4.0_20261103100223_424278c</felles-kontrakter.version>
+        <felles-kontrakter.version>4.0_20261108214032_20eed0c</felles-kontrakter.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
-        <unleash.version>12.3.1</unleash.version>
+        <unleash.version>12.3.2</unleash.version>
         <ktlint.version>1.8.0</ktlint.version>
         <sonar.organization>navikt</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
@@ -36,8 +36,8 @@
         <sonar.projectKey>navikt_gravferd-sak</sonar.projectKey>
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
-        <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
-        <kotlinx-kover.version>0.9.9</kotlinx-kover.version>
+        <mock-oauth2-server.version>6.1.5</mock-oauth2-server.version>
+        <kotlinx-kover.version>0.9.11</kotlinx-kover.version>
         <archunit.version>1.5.1</archunit.version>
         <kover.reportXml.path>${project.build.directory}/site/kover/report.xml</kover.reportXml.path>
         <argLine/>
