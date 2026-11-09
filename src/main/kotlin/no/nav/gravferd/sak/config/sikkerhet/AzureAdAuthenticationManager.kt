@@ -1,4 +1,4 @@
-package no.nav.gravferd.sak.sikkerhet
+package no.nav.gravferd.sak.config.sikkerhet
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.authentication.AuthenticationManager

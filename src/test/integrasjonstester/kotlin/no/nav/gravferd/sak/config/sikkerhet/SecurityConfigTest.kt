@@ -1,11 +1,8 @@
-package no.nav.gravferd.sak.config
+package no.nav.gravferd.sak.config.sikkerhet
 
 import jakarta.servlet.Filter
-import no.nav.gravferd.sak.sikkerhet.AzureAdAuthenticationManager
-import no.nav.gravferd.sak.sikkerhet.AzureAdJwtAuthenticationConverter
-import no.nav.gravferd.sak.sikkerhet.TestRolleConfig.rolleConfig
-import no.nav.gravferd.sak.sikkerhet.TestTokenServer.token
-import no.nav.gravferd.sak.sikkerhet.TestTokenServerConfig
+import no.nav.gravferd.sak.config.sikkerhet.TestRolleProperties.rolleProperties
+import no.nav.gravferd.sak.config.sikkerhet.TestTokenServer.token
 import org.assertj.core.api.Assertions.assertThat
 import org.hamcrest.Matchers.startsWith
 import org.junit.jupiter.api.BeforeEach
@@ -34,20 +31,20 @@ import org.springframework.web.context.WebApplicationContext
 import org.springframework.web.servlet.config.annotation.EnableWebMvc
 
 @Tag("integration")
-@SpringJUnitWebConfig(SecurityConfigurationTest.TestConfig::class)
-class SecurityConfigurationTest {
+@SpringJUnitWebConfig(SecurityConfigTest.TestConfig::class)
+class SecurityConfigTest {
     @Configuration
     @EnableWebMvc
     @Import(
         TestTokenServerConfig::class,
-        SecurityConfiguration::class,
+        SecurityConfig::class,
         AzureAdAuthenticationManager::class,
         AzureAdJwtAuthenticationConverter::class,
         TestController::class,
     )
     class TestConfig {
         @Bean
-        fun rolleConfig() = rolleConfig
+        fun rolleProperties() = rolleProperties
     }
 
     @RestController
@@ -125,7 +122,7 @@ class SecurityConfigurationTest {
     @Test
     fun `beskyttet endepunkt med ugyldig token gir 401`() {
         // Arrange
-        val token = token(audience = "annen-app", grupper = listOf(rolleConfig.saksbehandler))
+        val token = token(audience = "annen-app", grupper = listOf(rolleProperties.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -181,7 +178,7 @@ class SecurityConfigurationTest {
     @Test
     fun `kode6 alene gir ikke tilgang til beskyttet endepunkt`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.kode6))
+        val token = token(grupper = listOf(rolleProperties.kode6))
 
         // Act & Assert
         mockMvc
@@ -192,7 +189,7 @@ class SecurityConfigurationTest {
     @Test
     fun `kjent gruppe sammen med ukjente grupper gir tilgang`() {
         // Arrange
-        val token = token(grupper = listOf("ukjent-gruppe", rolleConfig.saksbehandler))
+        val token = token(grupper = listOf("ukjent-gruppe", rolleProperties.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -203,7 +200,7 @@ class SecurityConfigurationTest {
     @Test
     fun `post med gyldig token gir 200 uten csrf-token`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.saksbehandler))
+        val token = token(grupper = listOf(rolleProperties.saksbehandler))
 
         // Act & Assert
         mockMvc
@@ -225,7 +222,7 @@ class SecurityConfigurationTest {
     @Test
     fun `godkjent kall oppretter ikke sesjon eller autentiserer neste kall`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.veileder))
+        val token = token(grupper = listOf(rolleProperties.veileder))
 
         // Act & Assert
         mockMvc
@@ -248,7 +245,7 @@ class SecurityConfigurationTest {
 
     @Test
     fun `PreAuthorize avviser bruker uten påkrevd rolle`() {
-        val token = token(grupper = listOf(rolleConfig.veileder))
+        val token = token(grupper = listOf(rolleProperties.veileder))
 
         mockMvc
             .perform(get("/api/beslutter").header("Authorization", "Bearer $token"))
@@ -257,7 +254,7 @@ class SecurityConfigurationTest {
 
     @Test
     fun `PreAuthorize slipper inn bruker med påkrevd rolle`() {
-        val token = token(grupper = listOf(rolleConfig.beslutter))
+        val token = token(grupper = listOf(rolleProperties.beslutter))
 
         mockMvc
             .perform(get("/api/beslutter").header("Authorization", "Bearer $token"))

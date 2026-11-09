@@ -31,5 +31,3 @@ class CacheConfig {
             }
         }
 }
-
-fun CacheManager.getCacheOrThrow(cache: String): Cache = this.getCache(cache) ?: error("Finner ikke cache=$cache")

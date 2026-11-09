@@ -1,14 +1,14 @@
-package no.nav.gravferd.sak.sikkerhet
+package no.nav.gravferd.sak.config.sikkerhet
 
 import com.nimbusds.jose.JWSAlgorithm
 import com.nimbusds.jose.JWSHeader
 import com.nimbusds.jose.crypto.RSASSASigner
 import com.nimbusds.jose.jwk.gen.RSAKeyGenerator
 import com.nimbusds.jwt.SignedJWT
-import no.nav.gravferd.sak.sikkerhet.TestRolleConfig.rolleConfig
-import no.nav.gravferd.sak.sikkerhet.TestTokenServer.DEFAULT_AUDIENCE
-import no.nav.gravferd.sak.sikkerhet.TestTokenServer.DEFAULT_SUBJECT
-import no.nav.gravferd.sak.sikkerhet.TestTokenServer.token
+import no.nav.gravferd.sak.config.sikkerhet.TestRolleProperties.rolleProperties
+import no.nav.gravferd.sak.config.sikkerhet.TestTokenServer.DEFAULT_AUDIENCE
+import no.nav.gravferd.sak.config.sikkerhet.TestTokenServer.DEFAULT_SUBJECT
+import no.nav.gravferd.sak.config.sikkerhet.TestTokenServer.token
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Tag
@@ -25,13 +25,13 @@ class AzureAdAuthenticationManagerTest {
             jwksUri = TestTokenServer.jwksUri,
             issuer = TestTokenServer.issuer,
             audience = DEFAULT_AUDIENCE,
-            jwtAuthenticationConverter = AzureAdJwtAuthenticationConverter(rolleConfig),
+            jwtAuthenticationConverter = AzureAdJwtAuthenticationConverter(rolleProperties),
         )
 
     @Test
     fun `godtar gyldig token og mapper grupper til roller`() {
         // Arrange
-        val token = token(grupper = listOf(rolleConfig.saksbehandler))
+        val token = token(grupper = listOf(rolleProperties.saksbehandler))
 
         // Act
         val authentication = authenticationManager.authenticate(BearerTokenAuthenticationToken(token))
@@ -111,7 +111,7 @@ class AzureAdAuthenticationManagerTest {
     fun `avviser token med manipulert payload`() {
         // Arrange
         val gyldig = token().split(".")
-        val annen = token(grupper = listOf(rolleConfig.beslutter)).split(".")
+        val annen = token(grupper = listOf(rolleProperties.beslutter)).split(".")
         val token = listOf(gyldig[0], annen[1], gyldig[2]).joinToString(".")
 
         // Act

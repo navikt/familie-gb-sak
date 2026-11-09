@@ -1,10 +1,8 @@
-package no.nav.gravferd.sak.sikkerhet
+package no.nav.gravferd.sak.config.sikkerhet
 
-import no.nav.gravferd.sak.config.RolleConfig
-
-object TestRolleConfig {
-    val rolleConfig =
-        RolleConfig(
+object TestRolleProperties {
+    val rolleProperties =
+        RolleProperties(
             beslutter = "beslutter-gruppe",
             saksbehandler = "saksbehandler-gruppe",
             veileder = "veileder-gruppe",
