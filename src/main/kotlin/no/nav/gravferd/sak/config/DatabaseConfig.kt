@@ -9,7 +9,7 @@ import org.springframework.data.jdbc.repository.config.AbstractJdbcConfiguration
 import org.springframework.data.jdbc.repository.config.EnableJdbcRepositories
 
 @Configuration
-@EnableJdbcRepositories("no.nav.familie.prosessering", ApplicationConfig.PAKKENAVN)
+@EnableJdbcRepositories("no.nav.familie.prosessering", "${ApplicationConfig.PAKKENAVN}.ut.db")
 class DatabaseConfig : AbstractJdbcConfiguration() {
     @Bean
     override fun jdbcCustomConversions(): JdbcCustomConversions =
