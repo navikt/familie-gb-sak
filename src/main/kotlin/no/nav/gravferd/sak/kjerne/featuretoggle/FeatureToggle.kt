@@ -1,4 +1,4 @@
-package no.nav.gravferd.sak.config.featureToggle
+package no.nav.gravferd.sak.kjerne.featuretoggle
 
 enum class FeatureToggle(
     val navn: String,
