@@ -55,6 +55,42 @@ Forutsetninger:
 
 Appen starter på http://localhost:8091.
 
+## Arkitektur
+
+Appen er én Maven-modul delt i lag etter pakke. Avhengighetene peker inn mot `kjerne`, og [`ArkitekturTest`](src/test/enhetstester/kotlin/no/nav/gravferd/sak/arkitektur/ArkitekturTest.kt) feiler hvis noen bryter reglene.
+
+```mermaid
+flowchart LR
+    config["config<br/>Spring-oppsett, sikkerhet,<br/>Default-implementasjoner"]
+    inn["inn<br/>REST-controllere,<br/>Kafka-lyttere, jobber"]
+    kjerne["kjerne<br/>forretningslogikk og<br/>grensesnitt mot utsiden"]
+    ut["ut<br/>REST-klienter,<br/>Kafka-produsenter, database"]
+    common["common<br/>ClockProvider, secureLogger"]
+
+    config --> inn
+    inn --> kjerne
+    config --> kjerne
+    config --> ut
+    ut --> kjerne
+    inn --> common
+    kjerne --> common
+    ut --> common
+```
+
+| Pakke | Innhold |
+|---|---|
+| `kjerne` | Forretningslogikk, domenemodell og grensesnitt kjernen trenger fra utsiden |
+| `inn` | REST-controllere (`inn/rest`), Kafka-lyttere (`inn/kafka`) og schedulerte jobber (`inn/jobb`) |
+| `ut` | REST-klienter (`ut/rest`), Kafka-produsenter (`ut/kafka`) og database-repositories (`ut/db`) |
+| `config` | Spring-oppsett, sikkerhet (`config/sikkerhet`) og `Default*`-implementasjoner (`config/implementasjon`) |
+| `common` | Små hjelpere uten avhengigheter til resten av appen |
+
+- `inn` kaller kjernetjenestene direkte.
+- Trenger kjernen noe fra utsiden, eier kjernen et grensesnitt som `ut` eller `config/implementasjon` implementerer.
+- `inn` og `ut` inneholder ikke tjenester.
+- Grensesnitt heter `<Domene>Service`. Implementasjonen i produksjon heter `Default<Domene>Service`, og fakes i test heter `Fake<Domene>Service`.
+- Æ, ø og å er lov i klasse- og funksjonsnavn, men ikke i pakkenavn.
+
 ## Deploy
 
 Push til `main` deployer til dev og prod. Det finnes også workflows for manuell deploy til dev og prod.
