@@ -1,13 +1,10 @@
-package no.nav.gravferd.sak.config
+package no.nav.gravferd.sak.config.implementasjon
 
 import no.nav.familie.leader.LeaderClient
+import no.nav.gravferd.sak.inn.jobb.LeaderService
 import org.springframework.stereotype.Service
 
-interface LeaderClientService {
-    fun isLeader(): Boolean
-}
-
 @Service
-class DefaultLeaderClientService : LeaderClientService {
+class DefaultLeaderService : LeaderService {
     override fun isLeader(): Boolean = LeaderClient.isLeader() == true
 }

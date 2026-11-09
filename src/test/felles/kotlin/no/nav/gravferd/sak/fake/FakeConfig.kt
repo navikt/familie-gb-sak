@@ -10,5 +10,5 @@ class FakeConfig {
     @Bean
     @Primary
     @Profile("mock-leader-client")
-    fun fakeLeaderClientService(): FakeLeaderClientService = FakeLeaderClientService()
+    fun fakeLeaderService(): FakeLeaderService = FakeLeaderService()
 }
