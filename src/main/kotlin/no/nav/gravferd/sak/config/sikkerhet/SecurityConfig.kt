@@ -1,7 +1,5 @@
-package no.nav.gravferd.sak.config
+package no.nav.gravferd.sak.config.sikkerhet
 
-import no.nav.gravferd.sak.sikkerhet.AzureAdAuthenticationManager
-import no.nav.gravferd.sak.sikkerhet.Rolle.Companion.rollerMedInternTilgang
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.core.annotation.Order
@@ -15,7 +13,7 @@ import org.springframework.security.web.SecurityFilterChain
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
-class SecurityConfiguration(
+class SecurityConfig(
     private val azureAdAuthenticationManager: AzureAdAuthenticationManager,
 ) {
     @Bean

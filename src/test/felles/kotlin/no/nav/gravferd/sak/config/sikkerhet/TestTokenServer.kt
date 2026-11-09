@@ -1,4 +1,4 @@
-package no.nav.gravferd.sak.sikkerhet
+package no.nav.gravferd.sak.config.sikkerhet
 
 import no.nav.security.mock.oauth2.MockOAuth2Server
 import no.nav.security.mock.oauth2.token.DefaultOAuth2TokenCallback

@@ -1,9 +1,9 @@
-package no.nav.gravferd.sak.config
+package no.nav.gravferd.sak.config.sikkerhet
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
 @ConfigurationProperties("rolle")
-class RolleConfig(
+class RolleProperties(
     val beslutter: String,
     val saksbehandler: String,
     val veileder: String,
