@@ -5,7 +5,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
-import org.springframework.security.oauth2.jwt.Jwt
 
 class AzureAdJwtAuthenticationConverterTest {
     private val converter = AzureAdJwtAuthenticationConverter(rolleProperties)
@@ -22,7 +21,7 @@ class AzureAdJwtAuthenticationConverterTest {
         forventetAuthority: String,
     ) {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(gruppe))
+        val jwt = lagJwt(grupper = listOf(gruppe))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -35,13 +34,14 @@ class AzureAdJwtAuthenticationConverterTest {
     fun `mapper flere kjente grupper til alle tilhørende roller`() {
         // Arrange
         val jwt =
-            jwtMedGrupper(
-                listOf(
-                    rolleProperties.veileder,
-                    rolleProperties.forvalter,
-                    rolleProperties.saksbehandler,
-                    rolleProperties.beslutter,
-                ),
+            lagJwt(
+                grupper =
+                    listOf(
+                        rolleProperties.veileder,
+                        rolleProperties.forvalter,
+                        rolleProperties.saksbehandler,
+                        rolleProperties.beslutter,
+                    ),
             )
 
         // Act
@@ -60,7 +60,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `ignorerer ukjente grupper sammen med kjente grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf("ukjent-gruppe", rolleProperties.saksbehandler))
+        val jwt = lagJwt(grupper = listOf("ukjent-gruppe", rolleProperties.saksbehandler))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -72,7 +72,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ikke dupliserte roller ved gjentatte grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleProperties.veileder, rolleProperties.veileder))
+        val jwt = lagJwt(grupper = listOf(rolleProperties.veileder, rolleProperties.veileder))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -84,12 +84,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ingen roller uten groups claim`() {
         // Arrange
-        val jwt =
-            Jwt
-                .withTokenValue("test-token")
-                .header("alg", "RS256")
-                .subject("test-bruker")
-                .build()
+        val jwt = lagJwt(grupper = null)
 
         // Act
         val authentication = converter.convert(jwt)
@@ -101,7 +96,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ingen roller med tom gruppeliste`() {
         // Arrange
-        val jwt = jwtMedGrupper(emptyList())
+        val jwt = lagJwt(grupper = emptyList())
 
         // Act
         val authentication = converter.convert(jwt)
@@ -113,7 +108,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `gir ingen roller med bare ukjente grupper`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf("ukjent-gruppe"))
+        val jwt = lagJwt(grupper = listOf("ukjent-gruppe"))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -125,7 +120,7 @@ class AzureAdJwtAuthenticationConverterTest {
     @Test
     fun `kode6 gir ikke behandlerroller`() {
         // Arrange
-        val jwt = jwtMedGrupper(listOf(rolleProperties.kode6))
+        val jwt = lagJwt(grupper = listOf(rolleProperties.kode6))
 
         // Act
         val authentication = converter.convert(jwt)
@@ -133,12 +128,4 @@ class AzureAdJwtAuthenticationConverterTest {
         // Assert
         assertThat(authentication.authorities).isEmpty()
     }
-
-    private fun jwtMedGrupper(grupper: List<String>): Jwt =
-        Jwt
-            .withTokenValue("test-token")
-            .header("alg", "RS256")
-            .subject("test-bruker")
-            .claim("groups", grupper)
-            .build()
 }

@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:tc:postgresql:18-alpine:///gravferd-sak
+
+prosessering:
+  continuousRunning.enabled: false
+  rolle: "prosessering-gruppe"
+
+rolle:
+  veileder: "veileder-gruppe"
+  saksbehandler: "saksbehandler-gruppe"
+  beslutter: "beslutter-gruppe"
+  forvalter: "forvalter-gruppe"
+  kode6: "kode6-gruppe"
+
+unleash:
+  enabled: false
+
+NAIS_APP_NAME: gravferd-sak
+UNLEASH_SERVER_API_URL: http://localhost/unleash/api/
+UNLEASH_SERVER_API_TOKEN: dummy-token
+
+NAIS_TOKEN_ENDPOINT: http://localhost/token
+NAIS_TOKEN_EXCHANGE_ENDPOINT: http://localhost/token/exchange
+
+TILGANGSMASKIN_API_URL: http://localhost/tilgangsmaskin
+TILGANGSMASKIN_SCOPE: dummy
+
+AUTHORIZATION_URL: http://localhost/authorize
+TOKEN_URL: http://localhost/token

@@ -48,6 +48,8 @@ object TestTokenServer {
                             grupper?.let { put("groups", it) }
                             put("azp", DEFAULT_CLIENT_ID)
                             put("NAVident", "Z999999")
+                            put("name", "Test Saksbehandler")
+                            put("preferred_username", "test.saksbehandler@nav.no")
                             putAll(ekstraClaims)
                         },
                     expiry = expiry,
