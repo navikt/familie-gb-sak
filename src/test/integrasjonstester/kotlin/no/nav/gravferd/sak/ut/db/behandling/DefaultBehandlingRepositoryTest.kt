@@ -48,15 +48,15 @@ class DefaultBehandlingRepositoryTest : AbstractIntegrasjonstest() {
         fun `lagrer innlogget saksbehandler som oppretter`() {
             // Arrange
             val fagsak = fagsakRepository.opprett()
-            settSecurityHolderContext(claims = gyldigeClaims + ("NAVident" to "Z123456"))
+            settSecurityHolderContext()
 
             // Act
             val behandling = behandlingRepository.opprett(fagsak.id)
 
             // Assert
             val hentet = behandlingRepository.hent(behandling.id)
-            assertThat(hentet?.opprettetAv).isEqualTo("Z123456")
-            assertThat(hentet?.endretAv).isEqualTo("Z123456")
+            assertThat(hentet?.opprettetAv).isEqualTo(gyldigeClaims["NAVident"])
+            assertThat(hentet?.endretAv).isEqualTo(gyldigeClaims["NAVident"])
         }
 
         @Test

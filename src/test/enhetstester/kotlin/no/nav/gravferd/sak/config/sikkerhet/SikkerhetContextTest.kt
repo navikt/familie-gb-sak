@@ -63,9 +63,9 @@ class SikkerhetContextTest {
         val erSystemKontekst = SikkerhetContext.erSystemKontekst()
 
         // Assert
-        assertThat(saksbehandler).isEqualTo("Z123456")
-        assertThat(epost).isEqualTo("ola.nordmann@nav.no")
-        assertThat(navn).isEqualTo("Ola Nordmann")
+        assertThat(saksbehandler).isEqualTo(gyldigeClaims["NAVident"])
+        assertThat(epost).isEqualTo(gyldigeClaims["preferred_username"])
+        assertThat(navn).isEqualTo(gyldigeClaims["name"])
         assertThat(erSystemKontekst).isFalse()
     }
 
