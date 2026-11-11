@@ -11,4 +11,14 @@ class FakeConfig {
     @Primary
     @Profile("mock-leader-client")
     fun fakeLeaderService(): FakeLeaderService = FakeLeaderService()
+
+    @Bean
+    @Primary
+    @Profile("mock-clock-provider")
+    fun fakeClockProvider(): FakeClockProvider = FakeClockProvider()
+
+    @Bean
+    @Primary
+    @Profile("mock-feature-toggle")
+    fun fakeFeatureToggleService(): FakeFeatureToggleService = FakeFeatureToggleService()
 }
