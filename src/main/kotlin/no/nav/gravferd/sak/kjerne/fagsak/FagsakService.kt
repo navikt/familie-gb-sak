@@ -1,5 +1,6 @@
 package no.nav.gravferd.sak.kjerne.fagsak
 
+import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -11,5 +12,5 @@ class FagsakService(
     fun opprett(): Fagsak = fagsakRepository.opprett()
 
     @Transactional(readOnly = true)
-    fun hent(id: Long): Fagsak = fagsakRepository.hent(id) ?: throw NoSuchElementException("Fant ikke fagsak $id")
+    fun hent(id: Long): Fagsak = fagsakRepository.hent(id) ?: throw IkkeFunnetException("Fant ikke fagsak $id")
 }

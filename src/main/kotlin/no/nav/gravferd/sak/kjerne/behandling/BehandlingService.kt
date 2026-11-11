@@ -1,6 +1,7 @@
 package no.nav.gravferd.sak.kjerne.behandling
 
 import no.nav.gravferd.sak.kjerne.fagsak.FagsakService
+import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -16,7 +17,7 @@ class BehandlingService(
     }
 
     @Transactional(readOnly = true)
-    fun hent(id: Long): Behandling = behandlingRepository.hent(id) ?: throw NoSuchElementException("Fant ikke behandling $id")
+    fun hent(id: Long): Behandling = behandlingRepository.hent(id) ?: throw IkkeFunnetException("Fant ikke behandling $id")
 
     @Transactional(readOnly = true)
     fun hentForFagsak(fagsakId: Long): List<Behandling> {
