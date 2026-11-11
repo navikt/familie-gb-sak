@@ -10,17 +10,8 @@ import org.junit.jupiter.params.provider.ValueSource
 import org.springframework.security.authentication.AnonymousAuthenticationToken
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.context.SecurityContextHolder
-import org.springframework.security.oauth2.jwt.Jwt
-import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationToken
 
 class SikkerhetContextTest {
-    private val gyldigeClaims =
-        mapOf(
-            "NAVident" to "Z123456",
-            "name" to "Ola Nordmann",
-            "preferred_username" to "ola.nordmann@nav.no",
-        )
-
     @AfterEach
     fun ryddOpp() {
         SecurityContextHolder.clearContext()
@@ -128,20 +119,5 @@ class SikkerhetContextTest {
 
         // Assert
         assertThat(feil).isInstanceOf(IllegalStateException::class.java)
-    }
-
-    private fun settSecurityHolderContext(
-        claims: Map<String, Any> = gyldigeClaims,
-        roller: List<Rolle> = listOf(Rolle.SAKSBEHANDLER),
-    ) {
-        val jwt =
-            Jwt
-                .withTokenValue("test-token")
-                .header("alg", "RS256")
-                .subject("test-bruker")
-                .claims { it.putAll(claims) }
-                .build()
-        SecurityContextHolder.getContext().authentication =
-            JwtAuthenticationToken(jwt, roller.map { SimpleGrantedAuthority(it.authority()) })
     }
 }
