@@ -1,8 +1,15 @@
 package no.nav.gravferd.sak.kjerne.featuretoggle
 
 interface FeatureToggleService {
-    fun erPå(
+    fun erPå(toggle: FeatureToggle): Boolean
+
+    fun erPåForBehandling(
         toggle: FeatureToggle,
-        default: Boolean = false,
+        behandlingId: Long,
+    ): Boolean
+
+    fun erPåForFagsak(
+        toggle: FeatureToggle,
+        fagsakId: Long,
     ): Boolean
 }

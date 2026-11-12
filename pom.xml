@@ -37,6 +37,7 @@
         <springdoc.version>3.2.0</springdoc.version>
         <sonar-maven-plugin.version>5.8.0.7211</sonar-maven-plugin.version>
         <mock-oauth2-server.version>6.1.4</mock-oauth2-server.version>
+        <mockk.version>1.14.12</mockk.version>
         <kotlinx-kover.version>0.9.11</kotlinx-kover.version>
         <archunit.version>1.5.1</archunit.version>
         <kover.reportXml.path>${project.build.directory}/site/kover/report.xml</kover.reportXml.path>
@@ -217,6 +218,12 @@
         <dependency>
             <groupId>org.testcontainers</groupId>
             <artifactId>testcontainers-postgresql</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.mockk</groupId>
+            <artifactId>mockk-jvm</artifactId>
+            <version>${mockk.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
