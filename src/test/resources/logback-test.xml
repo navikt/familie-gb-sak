@@ -8,4 +8,5 @@
     </root>
 
     <logger name="secureLogger" level="OFF"/>
+    <logger name="auditLogger" level="INFO" additivity="false"/>
 </configuration>

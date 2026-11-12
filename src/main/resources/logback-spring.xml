@@ -20,6 +20,22 @@
         <appender-ref ref="team-logs"/>
     </logger>
 
+    <appender name="auditLogger" class="com.papertrailapp.logback.Syslog4jAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%m%n%xEx</pattern>
+        </layout>
+        <syslogConfig class="no.nav.gravferd.sak.config.auditlogg.AuditSyslogConfig">
+            <host>audit.nais</host>
+            <port>6514</port>
+            <ident>GRAVFERD-SAK</ident>
+            <maxMessageLength>128000</maxMessageLength>
+        </syslogConfig>
+    </appender>
+
+    <logger name="auditLogger" level="INFO" additivity="false">
+        <appender-ref ref="auditLogger"/>
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="stdout_json"/>
     </root>
