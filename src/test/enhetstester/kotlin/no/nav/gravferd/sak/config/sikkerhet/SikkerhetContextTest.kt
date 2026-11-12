@@ -120,4 +120,37 @@ class SikkerhetContextTest {
         // Assert
         assertThat(feil).isInstanceOf(IllegalStateException::class.java)
     }
+
+    @Test
+    fun `token med idtyp app er maskin-til-maskin-token`() {
+        // Arrange
+        settSecurityHolderContext(claims = mapOf("idtyp" to "app"), roller = emptyList())
+
+        // Act
+        val erMaskinTilMaskin = SikkerhetContext.erMaskinTilMaskinToken()
+
+        // Assert
+        assertThat(erMaskinTilMaskin).isTrue()
+    }
+
+    @Test
+    fun `token for innlogget saksbehandler er ikke maskin-til-maskin-token`() {
+        // Arrange
+        settSecurityHolderContext()
+
+        // Act
+        val erMaskinTilMaskin = SikkerhetContext.erMaskinTilMaskinToken()
+
+        // Assert
+        assertThat(erMaskinTilMaskin).isFalse()
+    }
+
+    @Test
+    fun `uten token er det ikke maskin-til-maskin-token`() {
+        // Act
+        val erMaskinTilMaskin = SikkerhetContext.erMaskinTilMaskinToken()
+
+        // Assert
+        assertThat(erMaskinTilMaskin).isFalse()
+    }
 }

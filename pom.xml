@@ -27,6 +27,7 @@
         <prosessering.version>2.20261102130928_50eba5f</prosessering.version>
         <felles-kontrakter.version>4.0_20261108214032_20eed0c</felles-kontrakter.version>
         <logstash-logback-encoder.version>9.0</logstash-logback-encoder.version>
+        <logback-syslog4j.version>1.0.0</logback-syslog4j.version>
         <unleash.version>12.3.2</unleash.version>
         <ktlint.version>1.8.0</ktlint.version>
         <sonar.organization>navikt</sonar.organization>
@@ -97,6 +98,11 @@
             <groupId>net.logstash.logback</groupId>
             <artifactId>logstash-logback-encoder</artifactId>
             <version>${logstash-logback-encoder.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.papertrailapp</groupId>
+            <artifactId>logback-syslog4j</artifactId>
+            <version>${logback-syslog4j.version}</version>
         </dependency>
 
         <!-- metrikker -->

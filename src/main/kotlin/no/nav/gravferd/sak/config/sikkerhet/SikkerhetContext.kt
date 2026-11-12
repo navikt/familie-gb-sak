@@ -11,6 +11,8 @@ object SikkerhetContext {
 
     fun erSystemKontekst(): Boolean = SecurityContextHolder.getContext().authentication == null
 
+    fun erMaskinTilMaskinToken(): Boolean = hentJwt()?.getClaimAsString("idtyp") == "app"
+
     fun hentSaksbehandler(): String = hentClaimEllerSystemverdi("NAVident", SYSTEM_FORKORTELSE)
 
     fun hentSaksbehandlerEpost(): String = hentClaimEllerSystemverdi("preferred_username", SYSTEM_FORKORTELSE)
