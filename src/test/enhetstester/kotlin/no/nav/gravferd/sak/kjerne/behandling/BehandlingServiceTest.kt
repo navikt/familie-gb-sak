@@ -3,7 +3,7 @@ package no.nav.gravferd.sak.kjerne.behandling
 import no.nav.gravferd.sak.fake.FakeBehandlingRepository
 import no.nav.gravferd.sak.fake.FakeFagsakRepository
 import no.nav.gravferd.sak.kjerne.fagsak.FagsakService
-import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetException
+import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetFeil
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Nested
@@ -34,7 +34,7 @@ class BehandlingServiceTest {
             val feil = catchThrowable { behandlingService.opprett(404) }
 
             // Assert
-            assertThat(feil).isInstanceOf(IkkeFunnetException::class.java)
+            assertThat(feil).isInstanceOf(IkkeFunnetFeil::class.java)
         }
     }
 
@@ -46,7 +46,7 @@ class BehandlingServiceTest {
             val feil = catchThrowable { behandlingService.hent(404) }
 
             // Assert
-            assertThat(feil).isInstanceOf(IkkeFunnetException::class.java)
+            assertThat(feil).isInstanceOf(IkkeFunnetFeil::class.java)
         }
     }
 
@@ -86,7 +86,7 @@ class BehandlingServiceTest {
             val feil = catchThrowable { behandlingService.hentForFagsak(404) }
 
             // Assert
-            assertThat(feil).isInstanceOf(IkkeFunnetException::class.java)
+            assertThat(feil).isInstanceOf(IkkeFunnetFeil::class.java)
         }
     }
 }
