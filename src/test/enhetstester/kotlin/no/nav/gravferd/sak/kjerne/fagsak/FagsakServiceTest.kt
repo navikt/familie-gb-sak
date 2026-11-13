@@ -1,7 +1,7 @@
 package no.nav.gravferd.sak.kjerne.fagsak
 
 import no.nav.gravferd.sak.fake.FakeFagsakRepository
-import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetException
+import no.nav.gravferd.sak.kjerne.feil.IkkeFunnetFeil
 import org.assertj.core.api.Assertions.assertThat
 import org.assertj.core.api.Assertions.catchThrowable
 import org.junit.jupiter.api.Test
@@ -27,6 +27,6 @@ class FagsakServiceTest {
         val feil = catchThrowable { fagsakService.hent(404) }
 
         // Assert
-        assertThat(feil).isInstanceOf(IkkeFunnetException::class.java)
+        assertThat(feil).isInstanceOf(IkkeFunnetFeil::class.java)
     }
 }
